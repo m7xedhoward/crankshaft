@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 setup(
     name='crankshaft',
 
-    version='0.0.0',
+    version='0.9.1',
 
     description='CartoDB Spatial Analysis Python Library',
 
@@ -42,9 +42,9 @@ setup(
     # provisioned in the production servers.
     # IMPORTANT NOTE: please don't change this line. Instead issue a ticket to systems for evaluation.
     # NOTE2: For Bionic, .travis.yml is editing this line to match dependencies
-    install_requires=['joblib==0.9.4', 'numpy==1.11.0', 'scipy==0.17.0', 'pysal==1.14.3', 'scikit-learn==0.17.0'],
+    install_requires=['joblib=>1.0.0', 'numpy', 'scipy', 'libpysal', 'scikit-learn','esda','spglm'],
 
-    requires=['pysal', 'numpy', 'sklearn'],
+    requires=['libpysal', 'numpy', 'sklearn'],
 
     test_suite='test'
 )

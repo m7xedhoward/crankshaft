@@ -2,7 +2,7 @@
 Getis-Ord's G geostatistics (hotspot/coldspot analysis)
 """
 
-import pysal as ps
+from esda import getisord
 from collections import OrderedDict
 
 # crankshaft modules
@@ -44,7 +44,6 @@ class Getis(object):
         weight = pu.get_weight(result, w_type, num_ngbrs)
 
         # calculate Getis-Ord's G* z- and p-values
-        getis = ps.esda.getisord.G_Local(attr_vals, weight,
-                                         star=True, permutations=permutations)
+        getis = getisord.G_Local(attr_vals, weight, star=True, permutations=permutations)
 
         return list(zip(getis.z_sim, getis.p_sim, getis.p_z_sim, weight.id_order))

@@ -627,9 +627,10 @@ class LikelihoodModelResults(Results):
             #switch to use_t false if undefined
             use_f = (hasattr(self, 'use_t') and self.use_t)
 
-        from patsy import DesignInfo
+        from patsy import design_info
+
         names = self.model.data.param_names
-        LC = DesignInfo(names).linear_constraint(r_matrix)
+        LC = design_info.DesignInfo(names).linear_constraint(r_matrix)
         r_matrix, q_matrix = LC.coefs, LC.constants
 
         if (self.normalized_cov_params is None and cov_p is None and

@@ -1,4 +1,5 @@
 """class for fetching data"""
+
 import plpy
 from . import pysal_utils as pu
 

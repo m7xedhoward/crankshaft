@@ -7,9 +7,11 @@ access functions <https://www.postgresql.org/docs/10/static/plpython.html>`__).
 """
 
 from collections import OrderedDict
-import pysal as ps
+from libpysal import weights
+from esda import moran
 
 # crankshaft module
+
 import crankshaft.pysal_utils as pu
 from crankshaft.analysis_data_provider import AnalysisDataProvider
 
@@ -72,8 +74,8 @@ class Moran(object):
         weight = pu.get_weight(result, w_type, num_ngbrs)
 
         # calculate moran global
-        moran_global = ps.esda.moran.Moran(attr_vals, weight,
-                                           permutations=permutations)
+        moran_global = moran.Moran(attr_vals, weight,
+                                   permutations=permutations)
 
         return list(zip([moran_global.I], [moran_global.EI]))
 
@@ -129,15 +131,15 @@ class Moran(object):
         weight = pu.get_weight(result, w_type, num_ngbrs)
 
         # calculate LISA values
-        lisa = ps.esda.moran.Moran_Local(attr_vals, weight,
-                                         permutations=permutations)
+        lisa = moran.Moran_Local(attr_vals, weight,
+                                 permutations=permutations)
 
         # find quadrants for each geometry
         quads = quad_position(lisa.q)
 
         # calculate spatial lag
-        lag = ps.weights.spatial_lag.lag_spatial(weight, lisa.y)
-        lag_std = ps.weights.spatial_lag.lag_spatial(weight, lisa.z)
+        lag = weights.spatial_lag.lag_spatial(weight, lisa.y)
+        lag_std = weights.spatial_lag.lag_spatial(weight, lisa.z)
 
         return list(zip(
             quads,
@@ -191,8 +193,7 @@ class Moran(object):
         weight = pu.get_weight(result, w_type, num_ngbrs)
 
         # calculate moran global rate
-        lisa_rate = ps.esda.moran.Moran_Rate(numer, denom, weight,
-                                             permutations=permutations)
+        lisa_rate = moran.Moran_Rate(numer, denom, weight, permutations=permutations)
 
         return list(zip([lisa_rate.I], [lisa_rate.EI]))
 
@@ -252,15 +253,14 @@ class Moran(object):
         weight = pu.get_weight(result, w_type, num_ngbrs)
 
         # calculate LISA values
-        lisa = ps.esda.moran.Moran_Local_Rate(numer, denom, weight,
-                                              permutations=permutations)
+        lisa = moran.Moran_Local_Rate(numer, denom, weight, permutations=permutations)
 
         # find quadrants for each geometry
         quads = quad_position(lisa.q)
 
         # spatial lag
-        lag = ps.weights.spatial_lag.lag_spatial(weight, lisa.y)
-        lag_std = ps.weights.spatial_lag.lag_spatial(weight, lisa.z)
+        lag = weights.spatial_lag.lag_spatial(weight, lisa.y)
+        lag_std = weights.spatial_lag.lag_spatial(weight, lisa.z)
 
         return list(zip(
             quads,
@@ -297,8 +297,7 @@ class Moran(object):
         weight = pu.get_weight(result, w_type, num_ngbrs)
 
         # calculate LISA values
-        lisa = ps.esda.moran.Moran_Local_BV(attr1_vals, attr2_vals, weight,
-                                            permutations=permutations)
+        lisa = moran.Moran_Local_BV(attr1_vals, attr2_vals, weight, permutations=permutations)
 
         # find clustering of significance
         lisa_sig = quad_position(lisa.q)

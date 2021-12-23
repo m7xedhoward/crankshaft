@@ -39,8 +39,8 @@ class GWR:
 
         # exit if data to analyze is empty
         if len(query_result) == 0:
-            plpy.error('No data passed to analysis or independent variables '
-                       'are all null-valued')
+            pass # nothing
+           # plpy.error('No data passed to analysis or independent variables ' 'are all null-valued')
 
         # unique ids and variable names list
         rowid = np.array(query_result[0]['rowid'], dtype=np.int)
@@ -68,10 +68,8 @@ class GWR:
 
         # calculate bandwidth if none is supplied
         if bw is None:
-            bw = Sel_BW(coords, Y, X,
-                        fixed=fixed, kernel=kernel).search()
-        model = PySAL_GWR(coords, Y, X, bw,
-                          fixed=fixed, kernel=kernel).fit()
+            bw = Sel_BW(coords, Y, X, fixed=fixed, kernel=kernel).search()
+        model = PySAL_GWR(coords, Y, X, bw, fixed=fixed, kernel=kernel).fit()
 
         # containers for outputs
         coeffs = []
@@ -125,8 +123,8 @@ class GWR:
 
         # exit if data to analyze is empty
         if len(query_result) == 0:
-            plpy.error('No data passed to analysis or independent variables '
-                       'are all null-valued')
+            pass # nothing
+          #  plpy.error('No data passed to analysis or independent variables ' 'are all null-valued')
 
         # unique ids and variable names list
         rowid = np.array(query_result[0]['rowid'], dtype=np.int)
@@ -157,9 +155,8 @@ class GWR:
 
         # report error if there is no data to predict
         if len(test) < 1:
-            plpy.error('No rows flagged for prediction: verify that rows '
-                       'denoting prediction locations have a dependent '
-                       'variable value of `null`')
+            pass #
+           # plpy.error('No rows flagged for prediction: verify that rows '  'denoting prediction locations have a dependent '  'variable value of `null`')
 
         # split dependent variable (only need training which is non-Null's)
         Y_train = Y[train].reshape((-1, 1))
@@ -175,8 +172,7 @@ class GWR:
 
         # calculate bandwidth if none is supplied
         if bw is None:
-            bw = Sel_BW(coords_train, Y_train, X_train,
-                        fixed=fixed, kernel=kernel).search()
+            bw = Sel_BW(coords_train, Y_train, X_train,fixed=fixed, kernel=kernel).search()
 
         # estimate model and predict at new locations
         model = PySAL_GWR(coords_train, Y_train, X_train,
@@ -198,5 +194,4 @@ class GWR:
             t_vals.append(json.dumps({var: model.tvalues[idx, k]
                                       for k, var in enumerate(ind_vars)}))
 
-        return list(zip(coeffs, stand_errs, t_vals,
-                   r_squared, predicted, rowid[test]))
+        return list(zip(coeffs, stand_errs, t_vals,r_squared, predicted, rowid[test]))

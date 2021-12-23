@@ -12,10 +12,10 @@ from .kernels import *
 from .search import golden_section, equal_interval, flexible_bw
 from .gwr import GWR
 from crankshaft.regression.glm.family import Gaussian, Poisson, Binomial
-import pysal.spreg.user_output as USER
+import spreg.user_output as USER
 from .diagnostics import get_AICc, get_AIC, get_BIC, get_CV
 from scipy.spatial.distance import pdist, squareform
-from pysal.common import KDTree
+from libpysal.cg import KDTree
 import numpy as np
 
 kernels = {1: fix_gauss, 2: adapt_gauss, 3: fix_bisquare, 4:
@@ -104,7 +104,7 @@ class Sel_BW(object):
         self.fixed = fixed
         self.kernel = kernel
         if offset is None:
-        	self.offset = np.ones((len(y), 1))
+            self.offset = np.ones((len(y), 1))
         else:
             self.offset = offset * 1.0
         self.fb = fb
@@ -177,7 +177,7 @@ class Sel_BW(object):
                 raise TypeError('Unsupported kernel function ', self.kernel)
         else:
             if self.kernel == 'gaussian':
-            	ktype = 2
+                ktype = 2
             elif self.kernel == 'bisquare':
                 ktype = 4
             elif self.kernel == 'exponential':
@@ -219,12 +219,12 @@ class Sel_BW(object):
             self.bw = equal_interval(self.bw_min, self.bw_max, self.interval,
                     gwr_func, self.int_score)
         else:
-            raise TypeError('Unsupported computational search method ', search)
+            raise TypeError('Unsupported computational search method ', self.search)
    
     def _fbw(self):
         y = self.y
         if self.constant:
-        	X = USER.check_constant(self.x_loc)
+            X = USER.check_constant(self.x_loc)
         else:
             X = self.x_loc
         n, k = X.shape

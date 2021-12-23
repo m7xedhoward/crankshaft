@@ -6,10 +6,10 @@ function in R and GLM function in statsmodels.
 
 __author__ = 'Taylor Oshan tayoshan@gmail.com'
 
-from pysal.contrib.glm.glm import GLM
-from pysal.contrib.glm.family import Gaussian, Poisson, Binomial, QuasiPoisson
+from spglm.glm import GLM
+from spglm.family import Gaussian, Poisson, Binomial, QuasiPoisson
 import numpy as np
-import pysal
+import libpysal
 import unittest
 import math
 
@@ -20,7 +20,7 @@ class TestGaussian(unittest.TestCase):
     """
 
     def setUp(self):
-        db = pysal.open(pysal.examples.get_path('columbus.dbf'),'r')
+        db = libpysal.io.open(libpysal.examples.get_path('columbus.dbf'),'r')
         y = np.array(db.by_col("HOVAL"))
         self.y = np.reshape(y, (49,1))
         X = []
@@ -158,7 +158,7 @@ class TestGaussian(unittest.TestCase):
 class TestPoisson(unittest.TestCase):
 
     def setUp(self):
-        db = pysal.open(pysal.examples.get_path('columbus.dbf'),'r')
+        db = libpysal.open(libpysal.examples.get_path('columbus.dbf'),'r')
         y = np.array(db.by_col("HOVAL"))
         y = np.reshape(y, (49,1))
         self.y = np.round(y).astype(int)

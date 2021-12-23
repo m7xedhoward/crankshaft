@@ -5,7 +5,7 @@ Segmentation creation and prediction
 import numpy as np
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn import metrics
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from crankshaft.analysis_data_provider import AnalysisDataProvider
 
 # NOTE: added optional param here

@@ -1,8 +1,8 @@
 
 import numpy as np
 import numpy.linalg as la
-from pysal.spreg.utils import RegressionPropsY, spdot
-import pysal.spreg.user_output as USER
+from spreg.utils import RegressionPropsY, spdot
+import spreg.user_output as USER
 from .utils import cache_readonly
 from .base import LikelihoodModelResults
 from . import family

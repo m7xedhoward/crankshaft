@@ -3,7 +3,7 @@
 -- REVOKE ALL PRIVILEGES ON SCHEMA cdb_crankshaft FROM PUBLIC, publicuser CASCADE;
 
 -- Grant permissions on the schema to publicuser (but just the schema)
-GRANT USAGE ON SCHEMA cdb_crankshaft TO publicuser;
+GRANT USAGE ON SCHEMA cdb_crankshaft TO postgres;
 
 -- Revoke execute permissions on all functions in the schema by default
 -- REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA cdb_crankshaft FROM PUBLIC, publicuser;

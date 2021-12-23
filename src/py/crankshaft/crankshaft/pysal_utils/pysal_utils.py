@@ -4,7 +4,7 @@
 """
 
 import numpy as np
-import pysal as ps
+from libpysal.weights import W
 
 
 def construct_neighbor_query(w_type, query_vals):
@@ -29,7 +29,7 @@ def get_weight(query_res, w_type='knn', num_ngbrs=5):
     neighbors = {x['id']: x['neighbors'] for x in query_res}
     print('len of neighbors: %d' % len(neighbors))
 
-    built_weight = ps.W(neighbors)
+    built_weight = W(neighbors)
     built_weight.transform = 'r'
 
     return built_weight
@@ -195,10 +195,8 @@ def gwr_query(params):
     GWR query
     """
 
-    replacements = {"ind_vars_select": query_attr_select(params,
-                                                         table_ref=None),
-                    "ind_vars_where": query_attr_where(params,
-                                                       table_ref=None)}
+    replacements = {"ind_vars_select": query_attr_select(params, table_ref=None),
+                    "ind_vars_where": query_attr_where(params, table_ref=None)}
 
     query = '''
       SELECT
